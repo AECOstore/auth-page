@@ -6,11 +6,11 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 <> a mfe:Manifest;
-    rdfs:label "tabs" ;
-    pav:hasVersion <#7a520a42-8cba-4c0b-89f8-ba07e4f7d5a6> .
+    rdfs:label "auth" ;
+    pav:hasVersion <#7a520abe-8cba-4c0b-89f8-ba07e4f7d5a6> .
 
 
-<#7a520a42-8cba-4c0b-89f8-ba07e4f7d5a6> a mfe:Edition ;
+<#7a520abe-8cba-4c0b-89f8-ba07e4f7d5a6> a mfe:Edition ;
     doap:revision "v2" ;
     mfe:code <https://aecostore.github.io/auth-page/index.js> .
 
