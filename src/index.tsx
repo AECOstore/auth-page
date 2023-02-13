@@ -14,7 +14,7 @@ export function setup(app: PiletApi) {
     autoClose: 2000,
   });
   app.registerMenu(() =>
-    <Link to="/auth" style={{marginLeft: 5, marginRight: 5}}>Project</Link>
+    <Link to="/auth" style={{marginLeft: 5, marginRight: 5}}>Auth</Link>
   );
   app.registerPage("/auth", Module)
   app.registerExtension(app.meta["link"], Module)
