@@ -10,12 +10,12 @@ export function setup(app: PiletApi) {
   const connect = app.makeState(app, constants)
   const Module = connect(({state, actions}) => app.withState(App, {app, state, actions}))
 
-  app.showNotification('Registered Project Pilet!', {
+  app.showNotification('Registered Auth Pilet!', {
     autoClose: 2000,
   });
   app.registerMenu(() =>
-    <Link to="/project" style={{marginLeft: 5, marginRight: 5}}>Project</Link>
+    <Link to="/auth" style={{marginLeft: 5, marginRight: 5}}>Project</Link>
   );
-  app.registerPage("/project", Module)
+  app.registerPage("/auth", Module)
   app.registerExtension(app.meta["link"], Module)
 }
