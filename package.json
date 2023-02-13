@@ -1,5 +1,5 @@
 {
-  "name": "project-pilet",
+  "name": "auth-pilet",
   "version": "1.0.0",
   "description": "",
   "keywords": [
@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "pilet debug --port 1003",
-    "build": "pilet build --target C:/Users/Administrator/Documents/code/mfe-consolid/back/system/SolidCommunity_Fuseki/data/jeroen/pilets/auth-pilet/index.js",
+    "build": "pilet build",
     "upgrade": "pilet upgrade"
   },
   "main": "dist/index.js",
