@@ -3,7 +3,6 @@ import { PiletApi } from 'consolid-shell';
 import Cookies from 'universal-cookie';
 import App from './App'
 import { Link } from 'react-router-dom';
-const cookies = new Cookies()
 
 export function setup(app: PiletApi) {
   const constants = app.getData("CONSTANTS")
@@ -11,12 +10,12 @@ export function setup(app: PiletApi) {
   const connect = app.makeState(app, constants)
   const Module = connect(({state, actions}) => app.withState(App, {app, state, actions}))
 
-  app.showNotification('Registered auth Pilet!', {
+  app.showNotification('Registered Project Pilet!', {
     autoClose: 2000,
   });
   app.registerMenu(() =>
-    <Link to="/auth" style={{marginLeft: 5, marginRight: 5}}>Log In</Link>
+    <Link to="/project" style={{marginLeft: 5, marginRight: 5}}>Project</Link>
   );
-  app.registerPage("/auth", Module)
-  app.registerExtension('auth-pilet', Module)
+  app.registerPage("/project", Module)
+  app.registerExtension(app.meta["link"], Module)
 }

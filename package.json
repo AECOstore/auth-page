@@ -1,6 +1,6 @@
 {
-  "name": "auth-pilet",
-  "version": "1.0.2",
+  "name": "project-pilet",
+  "version": "1.0.0",
   "description": "",
   "keywords": [
     "pilet"
@@ -25,7 +25,7 @@
     "webpack-cli": "^4.10.0"
   },
   "scripts": {
-    "start": "pilet debug --port 1001",
+    "start": "pilet debug --port 1003",
     "build": "pilet build --target C:/Users/Administrator/Documents/code/mfe-consolid/back/system/SolidCommunity_Fuseki/data/jeroen/pilets/auth-pilet/index.js",
     "upgrade": "pilet upgrade"
   },
@@ -55,6 +55,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@inrupt/solid-client-authn-core": "^1.12.2",
+    "@inrupt/vocab-common-rdf": "^1.0.5",
     "@mui/material": "^5.10.6",
     "buffer": "^6.0.3",
     "consolid-shell": "github:AECOstore/shell",
