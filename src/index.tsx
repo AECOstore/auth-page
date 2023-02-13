@@ -8,10 +8,7 @@ const cookies = new Cookies()
 export function setup(app: PiletApi) {
   const constants = app.getData("CONSTANTS")
 
-  let token = cookies.get(constants.ACCESS_TOKEN)
-  app.setData(constants.ACCESS_TOKEN, token)
-
-  const connect = app.makeState(app)
+  const connect = app.makeState(app, constants)
   const Module = connect(({state, actions}) => app.withState(App, {app, state, actions}))
 
   app.showNotification('Registered auth Pilet!', {

@@ -13,11 +13,9 @@
     "@types/react-dom": "^17",
     "@types/react-router": "^5",
     "@types/react-router-dom": "^5",
-    "consolid-shell": "file:..//consolid-shell//dist//emulator//consolid-shell-1.0.0.tgz",
     "history": "4.10.1",
     "path-to-regexp": "1.8.0",
     "piral-cli": "^0.14.31",
-    "piral-cli-webpack": "0.14.32",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-router": "5.3.3",
@@ -43,7 +41,6 @@
   "peerDependencies": {
     "@dbeining/react-atom": "*",
     "@libre/atom": "*",
-    "consolid-shell": "*",
     "history": "*",
     "path-to-regexp": "*",
     "react": "*",
@@ -54,11 +51,17 @@
   },
   "peerModules": [],
   "dependencies": {
+    "@comunica/query-sparql": "^2.4.3",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@inrupt/solid-client-authn-core": "^1.12.2",
     "@mui/material": "^5.10.6",
+    "buffer": "^6.0.3",
+    "consolid-shell": "github:AECOstore/shell",
     "jwt-decode": "^3.1.2",
+    "piral-cli-webpack5": "^0.14.32",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
     "universal-cookie": "^4.0.4",
     "uuid": "^9.0.0"
   }

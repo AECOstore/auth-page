@@ -1,9 +1,8 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
 import { TextField, Button, Grid, Box, Dialog, useMediaQuery, DialogTitle, DialogContent, Alert } from '@mui/material'
 import { PiletApi } from 'consolid-shell'
 import { v4 } from 'uuid'
-import { createDpopHeader, generateDpopKeyPair, buildAuthenticatedFetch } from '@inrupt/solid-client-authn-core';
+import { generateDpopKeyPair } from '@inrupt/solid-client-authn-core';
 import Cookies from 'universal-cookie';
 import jwt_decode from 'jwt-decode'
 const cookies = new Cookies()
@@ -33,21 +32,27 @@ async function generateAccessToken(email: string, password: string, idp: string)
     return { token: access_token, dpop: dpopKey }
 }
 
-
 const App = ({ piral }: { piral: PiletApi }) => {
-    const [oidcIssuer, setOidcIssuer] = useState("http://localhost:3000");
-    const [email, setEmail] = useState("jeroen@example.org");
-    const [password, setPassword] = useState("test123");
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(undefined)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const constants = piral.getData("CONSTANTS")
+    const [oidcIssuer, setOidcIssuer] = React.useState("http://localhost:3000");
+    const [email, setEmail] = React.useState("architect@example.org");
+    const [password, setPassword] = React.useState("test123");
+    const [loading, setLoading] = React.useState(false)
+    const [error, setError] = React.useState(undefined)
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false)
 
     // check if logged in at initialisation
-    useEffect(() => {
-        let token = cookies.get('access_token')
+    React.useEffect(() => {
+        let token = cookies.get(constants.ACCESS_TOKEN)
         if (token && token !== "undefined") {
-            const loggedIn = jwt_decode<any>(token).webid
-            setIsLoggedIn(loggedIn)
+            const webId = jwt_decode<any>(token).webid
+            console.log('webId', webId)
+            piral.findSparqlSatellite(webId).then(satellite => {
+                console.log('satellite', satellite)
+                piral.setData(constants.SPARQL_ENDPOINT, satellite)
+                piral.setData(constants.USER_WEBID, webId)
+                setIsLoggedIn(webId)
+            })
         } else {
             setIsLoggedIn(false)
         }
@@ -56,12 +61,16 @@ const App = ({ piral }: { piral: PiletApi }) => {
     const onLoginClick = async (e) => {
         try {
             setLoading(e => true)
-            console.log("logging in")
             const { token } = await generateAccessToken(email, password, oidcIssuer)
-            cookies.set("access_token", token)
-            piral.setData('http://localhost:5000/jeroen/access_token', token)
-            if (token) setIsLoggedIn(jwt_decode<any>(cookies.get('access_token')).webid)
-            else setIsLoggedIn(false)
+            cookies.set(constants.ACCESS_TOKEN, token)
+            // piral.setData(constants.ACCESS_TOKEN, token)
+
+            if (token) {
+                const webId = jwt_decode<any>(cookies.get(constants.ACCESS_TOKEN)).webid
+                setIsLoggedIn(webId)
+            } else {
+                setIsLoggedIn(false)
+            }
             setLoading(e => false)
         } catch (error) {
             setError(error.message)
@@ -72,8 +81,10 @@ const App = ({ piral }: { piral: PiletApi }) => {
     const onLogoutClick = async (e) => {
         try {
             setLoading(e => true)
-            cookies.set("access_token", undefined)
-            piral.setData('access_token', undefined)
+            cookies.set(constants.ACCESS_TOKEN, undefined)
+            // piral.setData(constants.ACCESS_TOKEN, undefined)
+            // piral.setData(constants.USER_WEBID, undefined)
+            // piral.setData(constants.SPARQL_ENDPOINT, undefined)
             setIsLoggedIn(false)
             setLoading(e => false)
         } catch (error) {
@@ -86,7 +97,7 @@ const App = ({ piral }: { piral: PiletApi }) => {
         <div style={{ alignContent: "center", padding: 30, alignItems: "center", justifyContent: "center", marginTop: "100px", textAlign: "center" }}>
             {(!isLoggedIn) ? (
                 <div>
-                    <h1 style={{ marginBottom: "30px" }}>Log in wth Solid</h1>
+                    <h1 style={{ marginBottom: "30px" }}>Log in with Solid</h1>
                     <TextField
                         style={inputStyle}
                         id="oidcIssuer"
@@ -134,7 +145,7 @@ const App = ({ piral }: { piral: PiletApi }) => {
                         Log out
                     </Button>
                 </div>
-                )}
+            )}
         </div>
     )
 }
