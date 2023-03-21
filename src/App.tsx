@@ -3,6 +3,7 @@ import { TextField, Button, Grid, Box, Dialog, useMediaQuery, DialogTitle, Dialo
 import { PiletApi } from 'consolid-shell'
 import { v4 } from 'uuid'
 import { generateDpopKeyPair } from '@inrupt/solid-client-authn-core';
+import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import jwt_decode from 'jwt-decode'
 const cookies = new Cookies()
@@ -14,6 +15,7 @@ async function generateAccessToken(email: string, password: string, idp: string)
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ email, password, name: v4() }),
     });
+
 
     const { id, secret } = await response.json();
     const tokenUrl = `${idp}.oidc/token`;
@@ -34,9 +36,9 @@ async function generateAccessToken(email: string, password: string, idp: string)
 
 const App = ({ piral }: { piral: PiletApi }) => {
     const constants = piral.getData("CONSTANTS")
-    const [oidcIssuer, setOidcIssuer] = React.useState("http://localhost:3000");
-    const [email, setEmail] = React.useState("architect@example.org");
-    const [password, setPassword] = React.useState("test123");
+    const [oidcIssuer, setOidcIssuer] = React.useState(constants.DEFAULT_IDP);
+    const [email, setEmail] = React.useState(constants.DEFAULT_USERNAME);
+    const [password, setPassword] = React.useState(constants.DEFAULT_PASSWORD);
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(undefined)
     const [isLoggedIn, setIsLoggedIn] = React.useState(false)
@@ -94,7 +96,7 @@ const App = ({ piral }: { piral: PiletApi }) => {
     };
 
     return (
-        <div style={{ alignContent: "center", padding: 30, alignItems: "center", justifyContent: "center", marginTop: "100px", textAlign: "center" }}>
+        <div style={{ alignContent: "center", padding: 100, alignItems: "center", justifyContent: "center", marginTop: "100px", textAlign: "center" }}>
             {(!isLoggedIn) ? (
                 <div>
                     <h1 style={{ marginBottom: "30px" }}>Log in with Solid</h1>
@@ -131,6 +133,9 @@ const App = ({ piral }: { piral: PiletApi }) => {
 
                     <Button style={buttonStyle} onClick={onLoginClick} disabled={loading} variant="contained" color="primary">
                         Log In
+                    </Button>
+                    <Button style={buttonStyle}  href={`${constants.DEFAULT_IDP}/idp/register/`} disabled={loading} variant="contained" color="primary">
+                        Register
                     </Button>
                     {(error) ? (
                         <Alert style={{ margin: 5 }} onClose={() => setError("")} severity="error">{error}</Alert>
