@@ -64,7 +64,10 @@ const App = ({ piral }: { piral: PiletApi }) => {
         try {
             setLoading(e => true)
             const { token } = await generateAccessToken(email, password, oidcIssuer)
-            cookies.set(constants.ACCESS_TOKEN, token)
+            cookies.set(constants.ACCESS_TOKEN, token, {
+                secure: true,
+                sameSite: 'none' 
+            })
             // piral.setData(constants.ACCESS_TOKEN, token)
 
             if (token) {
@@ -83,7 +86,10 @@ const App = ({ piral }: { piral: PiletApi }) => {
     const onLogoutClick = async (e) => {
         try {
             setLoading(e => true)
-            cookies.set(constants.ACCESS_TOKEN, undefined)
+            cookies.set(constants.ACCESS_TOKEN, undefined, {
+                secure: true,
+                sameSite: 'none' 
+            })
             // piral.setData(constants.ACCESS_TOKEN, undefined)
             // piral.setData(constants.USER_WEBID, undefined)
             // piral.setData(constants.SPARQL_ENDPOINT, undefined)
@@ -134,7 +140,7 @@ const App = ({ piral }: { piral: PiletApi }) => {
                     <Button style={buttonStyle} onClick={onLoginClick} disabled={loading} variant="contained" color="primary">
                         Log In
                     </Button>
-                    <Button style={buttonStyle}  href={`${constants.DEFAULT_IDP}/idp/register/`} disabled={loading} variant="contained" color="primary">
+                    <Button style={buttonStyle} href={`${constants.DEFAULT_IDP}/idp/register/`} disabled={loading} variant="contained" color="primary">
                         Register
                     </Button>
                     {(error) ? (
