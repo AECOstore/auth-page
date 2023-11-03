@@ -58,7 +58,7 @@
     "@inrupt/vocab-common-rdf": "^1.0.5",
     "@mui/material": "^5.10.6",
     "buffer": "^6.0.3",
-    "consolid-shell": "github:AECOstore/shell",
+    "consolid-shell": "github:AECOstore/bundler",
     "jwt-decode": "^3.1.2",
     "piral-cli-webpack5": "^0.14.32",
     "process": "^0.11.10",
