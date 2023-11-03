@@ -12,4 +12,5 @@
 
 <#v2> a mfe:Edition ;
     doap:revision "v2" ;
-    mfe:code <https://aecostore.github.io/auth-page/index.js> .
+    # mfe:code <https://aecostore.github.io/auth-page/index.js> .
+    mfe:code <http://localhost:1001/index.js> ;
