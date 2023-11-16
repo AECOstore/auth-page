@@ -48,12 +48,15 @@ const App = ({ piral }: { piral: PiletApi }) => {
         let token = cookies.get(constants.ACCESS_TOKEN)
         if (token && token !== "undefined") {
             const webId = jwt_decode<any>(token).webid
-            console.log('webId', webId)
+            piral.setData(constants.USER_WEBID, webId)
+            setIsLoggedIn(webId)
+
             piral.findSparqlSatellite(webId).then(satellite => {
-                console.log('satellite', satellite)
                 piral.setData(constants.SPARQL_ENDPOINT, satellite)
-                piral.setData(constants.USER_WEBID, webId)
-                setIsLoggedIn(webId)
+            })
+            piral.findConSolidSatellite(webId).then(satellite => {
+                console.log('satellite :>> ', satellite);
+                piral.setData(constants.CONSOLID_SATELLITE, satellite)
             })
         } else {
             setIsLoggedIn(false)
@@ -72,6 +75,13 @@ const App = ({ piral }: { piral: PiletApi }) => {
 
             if (token) {
                 const webId = jwt_decode<any>(cookies.get(constants.ACCESS_TOKEN)).webid
+                piral.findSparqlSatellite(webId).then(satellite => {
+                    piral.setData(constants.SPARQL_ENDPOINT, satellite)
+                })
+                piral.findConSolidSatellite(webId).then(satellite => {
+                    console.log('satellite :>> ', satellite);
+                    piral.setData(constants.CONSOLID_SATELLITE, satellite)
+                })
                 setIsLoggedIn(webId)
             } else {
                 setIsLoggedIn(false)
