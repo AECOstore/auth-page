@@ -1,7 +1,7 @@
 # Mifesto: Auth Page
 This is a micro-frontend module that provides a page for authentication with Solid. At this point in time, the [Community Solid Server](https://github.com/CommunitySolidServer/CommunitySolidServer) must be used (tested with v3) for demo purposes. To log in with Solid, you need to indicate the URL of your Solid Identity Provider, along with the e-mail address you registered with and your password. The module will then attempt to log you in and provide you with a JSON Web token. This token can be used to authenticate with other micro-frontend modules.
 
-![Auth Page UI](public/auth-page.png)
+![Auth Page UI](public/module.png)
 
 ## About Mifesto
 Mifesto (Micro-Frontend Store) is an experimental framework for federation of micro-frontends. It is a work in progress and is not yet ready for production use. Micro-frontend modules expose the following: 
